@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>screen/</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="home">
+        <h1>Screen/</h1>
+        <label id="drop_zone" for="upload_input">
+          <span>
+            <span id="span_drop">Drop Image Here</span><br />
+            or<br />
+            <span id="span_paste">Paste Image From Clipboard</span><br />
+            or<br />
+            <span id="span_upload">Click To Choose Image</span><br />
+
+            <input id="upload_input" type="file" />
+          </span>
+        </div>
+      </div>
+      <div id="editor">
+        <div id="screenshot_header">
+          <span id="source_url"> </span>
+          <form id="annotation_tools">
+            <label class="line">
+              <input type="radio" name="tool" value="Line" checked />
+              <span>Line</span>
+            </label>
+            <label class="arrow">
+              <input type="radio" name="tool" value="Arrow" />
+              <span>Arrow</span>
+            </label>
+            <label class="highlight">
+              <input type="radio" name="tool" value="Highlight" />
+              <span>Hightlight</span>
+            </label>
+            <label class="box">
+              <input type="radio" name="tool" value="Box" />
+              <span>Box</span>
+            </label>
+            <label class="circle">
+              <input type="radio" name="tool" value="Circle" />
+              <span>Circle</span>
+            </label>
+            <label class="text">
+              <input type="radio" name="tool" value="Text" />
+              <span>Text</span>
+            </label>
+            <label class="blur">
+              <input type="radio" name="tool" value="Blur" />
+              <span>Blur</span>
+            </label>
+          </form>
+        </div>
+        <div id="screenshot_pane">
+          <div id="screenshot_container">
+            <img id="screenshot_image" src="" />
+            <canvas id="canvas"></canvas>
+          </div>
+          <ul id="annotations"></ul>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/static/js/index.js"></script>
+  </body>
+</html>

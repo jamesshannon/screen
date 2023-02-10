@@ -1,0 +1,215 @@
+#drop_zone {
+  display: flex;
+  width: 40%;
+  min-width: 500px;
+  height: 200px;
+  background-color: rgb(255, 226, 231);
+  border: 3px dashed #333333;
+  margin: auto;
+
+  font-weight: bold;
+
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+#drop_zone.dragenter {
+  background-color: rgb(249, 198, 206);
+}
+
+/* Prevent the dragleave from firing on #drop_zone when pointer enters spans */
+#drop_zone * {
+  pointer-events: none;
+}
+
+#drop_zone span span {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 35px;
+
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 25px;
+}
+
+#span_drop {
+  background: url(/static/images/icon-drag.png);
+}
+
+#span_paste {
+  background: url(/static/images/icon-paste.png);
+}
+
+#span_upload {
+  background: url(/static/images/icon-upload.png);
+}
+
+#upload_input {
+  display: none;
+}
+
+#editor {
+  display: none;
+}
+#home {
+  display: none;
+}
+
+body.home #home {
+  display: block;
+}
+
+body.editing #editor {
+  display: block;
+}
+
+#screenshot_header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#screenshot_header #source_url,
+#screenshot_header #annotation_tools {
+  display: inline-block;
+}
+
+#screenshot_header #source_url {
+  background-image: url(/static/images/icon-website.png);
+  background-repeat: no-repeat;
+  background-size: 30px;
+
+  padding: 0 0 0 40px;
+  font-size: 20px;
+  line-height: 30px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: 50%;
+}
+
+#screenshot_header #source_url:empty {
+  visibility: hidden;
+}
+
+#screenshot_container {
+  position: relative;
+  user-select: none;
+
+  box-shadow: 0 0 3px #666666;
+
+  cursor: crosshair;
+}
+
+#screenshot_container img,
+#screenshot_container canvas,
+#screenshot_container div {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#screenshot_container div {
+  color: red;
+  text-shadow: -1px -1px 0px white, 1px -1px 0px white, 1px 1px 0px white,
+    -1px 1px 0px white;
+  font-family: sans-serif;
+}
+
+#annotation_tools {
+  user-select: none;
+}
+
+#annotation_tools label {
+  display: inline-block;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+}
+
+#annotation_tools label.line {
+  background-image: url(/static/images/icon-line.png);
+}
+
+#annotation_tools label.arrow {
+  background-image: url(/static/images/icon-arrow.png);
+}
+
+#annotation_tools label.box {
+  background-image: url(/static/images/icon-rectangle.png);
+}
+
+#annotation_tools label.highlight {
+  background-image: url(/static/images/icon-highlighter.png);
+}
+
+#annotation_tools label.circle {
+  background-image: url(/static/images/icon-circle.png);
+}
+
+#annotation_tools label.text {
+  background-image: url(/static/images/icon-text.png);
+}
+
+#annotation_tools label.blur {
+  background-image: url(/static/images/icon-eraser.png);
+}
+
+#annotation_tools span {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 45px;
+  height: 45px;
+  border: 1px solid #999999;
+  border-radius: 4px;
+
+  /* Don't show the span text */
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#annotation_tools input[type="radio"] {
+  display: none;
+}
+
+#annotation_tools input[type="radio"]:checked + span {
+  border: 2px solid #e94174;
+  box-shadow: 0px 0px 16px -6px rgba(0, 0, 0, 0.5);
+}
+
+#screenshot_pane {
+  position: relative;
+}
+
+#annotations {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #999999;
+  border-radius: 4px;
+  background-color: #ffffff88;
+
+  list-style-type: none;
+}
+
+#annotations:empty {
+  display: none;
+}
+
+#annotations button {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
