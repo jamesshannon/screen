@@ -1,0 +1,19 @@
+body,
+body * {
+  margin: 0;
+  padding: 0;
+
+  user-select: none;
+  cursor: crosshair;
+}
+
+#container {
+  position: relative;
+}
+
+#screenshot,
+#crop_canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
