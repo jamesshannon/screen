@@ -1,0 +1,4 @@
+{
+  "DB_FILE": "../../screendb.sqlite3",
+  "FILE_STORAGE": "../../screenfiles"
+}
