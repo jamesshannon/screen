@@ -73,8 +73,7 @@ body.editing #editor {
   margin-bottom: 10px;
 }
 
-#screenshot_header #source_url,
-#screenshot_header #annotation_tools {
+#screenshot_header #source_url {
   display: inline-block;
 }
 
@@ -104,7 +103,9 @@ body.editing #editor {
   margin: auto;
 
   box-shadow: 0 0 3px #666666;
+}
 
+#editor.editable #screenshot_container {
   cursor: crosshair;
 }
 
@@ -125,6 +126,13 @@ body.editing #editor {
 
 #annotation_tools {
   user-select: none;
+
+  /* default non-editable state */
+  display: none;
+}
+
+#editor.editable #annotation_tools {
+  display: inline-block;
 }
 
 #annotation_tools label {
@@ -192,6 +200,9 @@ body.editing #editor {
 }
 
 #annotations {
+  /* non-editable default state */
+  display: none;
+
   position: absolute;
   top: 0;
   right: 0;
@@ -203,6 +214,10 @@ body.editing #editor {
   background-color: #ffffff88;
 
   list-style-type: none;
+}
+
+#editor.editable #annotations {
+  display: block;
 }
 
 #annotations:empty {

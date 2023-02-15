@@ -1,1 +1,2 @@
 Flask==2.2.2
+Flask-OIDC @ git+https://github.com/fedora-infra/flask-oidc/@f9e4367098f269160edca4c4601b98372aae8c65

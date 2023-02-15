@@ -7,6 +7,7 @@ import { AnnotationsCollection } from "./annotations_collection.js";
 /** Module-level variables to maintain some editor state. */
 let annotationCollection: AnnotationsCollection;
 let image: Screenshot;
+let editable = false;
 
 /** @function Initialize the editor module. Run once per SPA load. */
 export function init() {
@@ -26,6 +27,9 @@ export async function setupScreenshot(ss: Screenshot): Promise<void> {
 
   const $ctr = document.getElementById("screenshot_container")!;
   const $canvas = document.getElementById("canvas")! as HTMLCanvasElement;
+
+  editable = user_id === ss.user_id;
+  document.getElementById("editor").classList.toggle("editable", editable);
 
   // Update the Source URL text
   let url_text = "";
@@ -55,8 +59,10 @@ export async function setupScreenshot(ss: Screenshot): Promise<void> {
     ss
   );
 
-  // #### TODO: Does this add multiple event handlers????
-  $canvas.addEventListener("mousedown", beginAnnotation);
+  if (editable) {
+    // #### TODO: Does this add multiple event handlers????
+    $canvas.addEventListener("mousedown", beginAnnotation);
+  }
 }
 
 /** @function Handle the annotation list "(X)" button to delete annotations. */

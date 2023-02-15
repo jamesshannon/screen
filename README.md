@@ -56,8 +56,15 @@ that only the uploader can annotate their screenshots.
 
 1. Clone or download this repository
 1. Install from requirements.txt
+1. Create Google OAuth client and download `client_secrets.json` file
 1. Optionally, modify `server/config.json` to update file paths for the databse
    and the file storage directory.
+1. Add the following config values to `server/config.json`:
+   - `OIDC_CLIENT_SECRETS` - Relative path to `client_secrets.json` file
+   - `OIDC_COOKIE_SECURE` - `false` if you're developing locally without SSL
+   - `OIDC_GOOGLE_APPS_DOMAIN` - The domain from which you want to limit logins
+   - `SECRET_KEY` - A large random string
+1. Optionally, install the chrome extension by opening up `chrome://extensions`, enabling developer mode, and then `Load unpacked` from the `extension/chrome-extension` directory
 1. From the `server` directory, execute `python -m flask initdb`
 1. From the `server` directory, execute `python -m flask --debug run -p 8000`
 1. Visit [http://localhost:8000](http://localhost:8000)

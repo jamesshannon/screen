@@ -1,4 +1,8 @@
 {
   "DB_FILE": "../../screendb.sqlite3",
-  "FILE_STORAGE": "../../screenfiles"
+  "FILE_STORAGE": "../../screenfiles",
+  "OIDC_CLIENT_SECRETS": "client_secrets.json",
+  "OIDC_COOKIE_SECURE": false,
+  "OIDC_GOOGLE_APPS_DOMAIN": "jamesshannon.com",
+  "SECRET_KEY": "ajsdfajldfahifnh4hui8795hbkjzdvknlh3rhbadsfn83o4uhbkldafyugt454523vjhdshjadsfadfu3uihadskjfakdnsdnad svahjewdsfjasfa"
 }

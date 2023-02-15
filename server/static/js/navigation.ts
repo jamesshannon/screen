@@ -2,6 +2,10 @@
 import * as editor from "./editor/editor.js";
 import { Screenshot } from "./editor/models.js";
 
+declare global {
+  var user_id: string;
+}
+
 /** @function Initialize the SPA navigation module and load initial page. */
 export async function init(): Promise<void> {
   window.addEventListener("popstate", updateApp);
@@ -17,8 +21,11 @@ export async function init(): Promise<void> {
       navigateToScreenshot(
         await Screenshot.create(hash_vars.img_data, hash_vars.source_url)
       );
+
+      return;
     }
 
+    document.body.classList.add("home");
     return;
   }
 
@@ -45,7 +52,6 @@ export async function init(): Promise<void> {
   }
 
   editor.setupScreenshot(ss);
-  document.body.classList.remove("home");
   document.body.classList.add("editing");
 }
 
