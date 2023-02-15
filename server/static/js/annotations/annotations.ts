@@ -296,7 +296,7 @@ export class BlurAnnotation extends DrawAnnotation {
   /** @property Pixelation level. Higher numbers are more pixelated. */
   private pixel_size = 5;
 
-  /** @property Canvas element with pixelated version of the soruce image. */
+  /** @property Canvas element with pixelated version of the source image. */
   private blurred_canvas: HTMLCanvasElement;
 
   constructor(canvas: HTMLCanvasElement, collection: AnnotationsCollection) {

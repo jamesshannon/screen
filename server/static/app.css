@@ -75,9 +75,7 @@ body.editing #editor {
 
 #screenshot_header #source_url {
   display: inline-block;
-}
 
-#screenshot_header #source_url {
   background-image: url(/static/images/icon-website.png);
   background-repeat: no-repeat;
   background-size: 30px;
@@ -95,6 +93,18 @@ body.editing #editor {
 
 #screenshot_header #source_url:empty {
   visibility: hidden;
+}
+
+#screenshot_header #source_url a {
+  text-decoration: none;
+}
+
+#screenshot_header #source_url a:visited {
+  color: blue;
+}
+
+#screenshot_header #source_url a:hover {
+  text-decoration: underline;
 }
 
 #screenshot_container {
@@ -220,7 +230,7 @@ body.editing #editor {
   display: block;
 }
 
-#annotations:empty {
+#editor.editable #annotations:empty {
   display: none;
 }
 

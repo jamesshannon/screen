@@ -64,14 +64,18 @@ that only the uploader can annotate their screenshots.
    - `OIDC_COOKIE_SECURE` - `false` if you're developing locally without SSL
    - `OIDC_GOOGLE_APPS_DOMAIN` - The domain from which you want to limit logins
    - `SECRET_KEY` - A large random string
-1. Optionally, install the chrome extension by opening up `chrome://extensions`, enabling developer mode, and then `Load unpacked` from the `extension/chrome-extension` directory
+1. Optionally, install the chrome extension by opening up `chrome://extensions`,
+   enabling developer mode, and then `Load unpacked` from the
+   `extension/chrome-extension` directory
 1. From the `server` directory, execute `python -m flask initdb`
 1. From the `server` directory, execute `python -m flask --debug run -p 8000`
 1. Visit [http://localhost:8000](http://localhost:8000)
 
 ## Screenshots
 
-[Coming Soon]
+### Screenshot View as screenshot uploader
+
+![Screenshot 2023-02-14 22 10 21](https://user-images.githubusercontent.com/761381/218946855-0bbb3446-9782-49ea-90a7-c277705b4e9d.png)
 
 ## Todo
 
