@@ -77,6 +77,7 @@ function moveHandler(evt: MouseEvent) {
   ctx.clearRect(0, 0, $canvas.width, $canvas.height);
   ctx.beginPath();
   ctx.strokeStyle = "red";
+  ctx.setLineDash([6]);
   ctx.rect(...start, ...dimensions);
   ctx.closePath();
   ctx.stroke();

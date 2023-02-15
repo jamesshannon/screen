@@ -1,4 +1,4 @@
-# Screen/ -- Self-hosted Screenshot Hosting & Annotating
+# screen/ -- Self-hosted Screenshot Hosting & Annotating
 
 screen/ is a web-app to host and share screenshots. It's like Imgur plus Skitch,
 but in the browser, and for companies. The use case is enterprise-wide

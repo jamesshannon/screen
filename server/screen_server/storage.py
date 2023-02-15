@@ -41,9 +41,8 @@ class LocalFileSystemStorageService(StorageService):
     # first half are randomly generated while the last half is a timestamp which
     # effectively means that first half of that is going to represent the
     # "years" while the last half will be somewhat well distributed over time.
-    # Filenames are base32, so 1024 possibilities per 2 characters. The last
-    # six characters basically the date without any of the randomness
-    sharded_dir = self.root_directory / file_id[-6:-4] / file_id[0:2]
+    # Filenames are base32, so 1024 possibilities per 2 characters.
+    sharded_dir = self.root_directory / file_id[-6:-4] / file_id[0]
     sharded_dir.mkdir(exist_ok=True, parents=True)
     return sharded_dir / self.get_filename(file_id, variant)
 

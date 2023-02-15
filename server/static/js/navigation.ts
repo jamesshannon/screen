@@ -19,7 +19,6 @@ export async function init(): Promise<void> {
       );
     }
 
-    document.body.classList.add("home");
     return;
   }
 

@@ -2,8 +2,7 @@
 chrome.action.onClicked.addListener(capture);
 
 /** @function Handle the action button click and open crop page. */
-async function capture() {
-  // TODO: check if tab is
+async function capture(): Promise<void> {
   const [active_tab] = await chrome.tabs.query({
     active: true,
     lastFocusedWindow: true,
@@ -24,7 +23,21 @@ async function capture() {
     const capture = await capture_request;
     const crop_tab = await tab_request;
 
-    // send capture data to the tab
+    // The tab_request promise will resolve before the tab loading is complete
+    // and before the message event handler is registered. We loop and pause
+    // until status==complete before we try to send a message to the tab.
+    while (true) {
+      console.log("Checking if tab loading is complete.");
+      let check_crop_tab = await chrome.tabs.get(crop_tab.id!);
+      if (check_crop_tab.status === "complete") {
+        break;
+      }
+
+      // Pause 100ms before checking again.
+      await new Promise((r) => setTimeout(r, 100));
+    }
+
+    // Send capture data to the tab.
     chrome.tabs.sendMessage(crop_tab.id!, {
       request: "CROP",
       source_url: active_tab.url,

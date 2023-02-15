@@ -101,6 +101,7 @@ body.editing #editor {
 #screenshot_container {
   position: relative;
   user-select: none;
+  margin: auto;
 
   box-shadow: 0 0 3px #666666;
 
