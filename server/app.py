@@ -10,7 +10,7 @@ import werkzeug.routing
 
 from screen_server import db
 from screen_server import models
-from screen_server import storage
+from screen_server.storage import storage
 
 # pyright: reportUnknownArgumentType=false
 
@@ -26,6 +26,7 @@ app.config.from_file(str(MY_DIR / 'config.json'), load=json.load)
 
 oidc = flask_oidc.OpenIDConnect(app)
 
+STORAGE = storage.StorageService.get_instance(app.config)
 
 # Type definition for view function return values; they can return a handful of
 # things and Flask will interpret it correctly
@@ -99,11 +100,7 @@ def get_image_data(image_id: str) -> FlaskResponse:
   if not img:
     return "Screenshot Not Found", 404
 
-  fsss = storage.LocalFileSystemStorageService(str(app.config['FILE_STORAGE']))
-
-  resp = flask.make_response(fsss.read_file(img.image_id))
-  return resp
-
+  return flask.send_file(STORAGE.read_file(img.image_id), mimetype='image/png')
 
 #### API Calls
 # Image GET
@@ -127,8 +124,7 @@ def new_image() -> FlaskResponse:
                      source_url=flask.request.form.get('source_url'))
   _get_request_conn().insert_image(img)
 
-  fsss = storage.LocalFileSystemStorageService(app.config['FILE_STORAGE'])
-  fsss.write_file(img.image_id, img_file)
+  STORAGE.write_file(img.image_id, img_file)
 
   return img.as_dict()
 

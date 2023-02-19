@@ -59,17 +59,36 @@ that only the uploader can annotate their screenshots.
 1. Create Google OAuth client and download `client_secrets.json` file
 1. Optionally, modify `server/config.json` to update file paths for the databse
    and the file storage directory.
-1. Add the following config values to `server/config.json`:
-   - `OIDC_CLIENT_SECRETS` - Relative path to `client_secrets.json` file
-   - `OIDC_COOKIE_SECURE` - `false` if you're developing locally without SSL
-   - `OIDC_GOOGLE_APPS_DOMAIN` - The domain from which you want to limit logins
-   - `SECRET_KEY` - A large random string
+1. Modify `server/config.json` with your
+   [configuration parameters](#configuration-parameters).
 1. Optionally, install the chrome extension by opening up `chrome://extensions`,
    enabling developer mode, and then `Load unpacked` from the
    `extension/chrome-extension` directory
 1. From the `server` directory, execute `python -m flask initdb`
 1. From the `server` directory, execute `python -m flask --debug run -p 8000`
 1. Visit [http://localhost:8000](http://localhost:8000)
+
+### Configuration Parameters
+
+- `DB_FILE` - (Relative) path to sqlite file. Must be created first with
+  `python -m flask initdb`.
+- OIDC-specific settings as
+  [documented here](https://flask-oidc.readthedocs.io/en/latest/#settings-reference),
+  and specifically including:
+  - `OIDC_CLIENT_SECRETS` - Relative path to `client_secrets.json` file.
+  - `OIDC_COOKIE_SECURE` - `false` if you're developing locally without SSL;
+    should be `true` or non-existent when deployed.
+  - `OIDC_GOOGLE_APPS_DOMAIN` - The domain from which you want to limit logins.
+- `SECRET_KEY` - A large random string, used by
+  [Flask for session cookies](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY).
+- File Storage Configuration
+  - `FILES_SERVICE` - Either `LOCAL` or `S3`.
+  - `FILES_LOCAL_DIR` - Local directory for screenshot storage. Required if
+    `FILES_SERVICE` is `LOCAL` or if `FILES_SERVICE` is `S3` and
+    `FILES_S3_LOCAL_CACHE` is `true`.
+  - `FILES_S3_BUCKET` - S3 bucket name. Required for S3.
+  - `FILES_S3_KEY` - S3 authorization key. Required for S3.
+  - `FILES_S3_SECRET` - S3 authorization secret key. Required for S3.
 
 ## Screenshots
 
@@ -79,10 +98,10 @@ that only the uploader can annotate their screenshots.
 
 ## Todo
 
-1. Implement SSO-based authentication
+1. ~~Implement SSO-based authentication~~
 1. Create thumbnails on upload
 1. Overwrite the image when blurring
-1. Cloud-based StorageService library to store images in AWS / GCP
+1. Cloud-based StorageService library to store images in ~~AWS~~ / GCP
 1. Homepage section which shows your recently created images
 1. LRU-based request caching, including invalidating another process' cache
 1. Docker-based installation
