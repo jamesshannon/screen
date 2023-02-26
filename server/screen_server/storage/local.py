@@ -22,8 +22,8 @@ class LocalFileSystemStorageService(storage.StorageService):
   def __init__(self, config: dict[str, str]):
     super().__init__(config)
 
-    self.root_directory = pathlib.Path(config['FILES_LOCAL_DIR'])
-    self.root_directory.mkdir(exist_ok=True)
+    self.root_directory = pathlib.Path(config['STORAGE_LOCAL_DIR'])
+    self.root_directory.mkdir(exist_ok=True, parents=True)
 
   def _get_filepath(self, file_id: str,
                     variant: Optional[str] = None) -> pathlib.Path:

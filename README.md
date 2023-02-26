@@ -57,9 +57,7 @@ that only the uploader can annotate their screenshots.
 1. Clone or download this repository
 1. Install from requirements.txt
 1. Create Google OAuth client and download `client_secrets.json` file
-1. Optionally, modify `server/config.json` to update file paths for the databse
-   and the file storage directory.
-1. Modify `server/config.json` with your
+1. Create `server/config/config.env` with your
    [configuration parameters](#configuration-parameters).
 1. Optionally, install the chrome extension by opening up `chrome://extensions`,
    enabling developer mode, and then `Load unpacked` from the
@@ -70,8 +68,28 @@ that only the uploader can annotate their screenshots.
 
 ### Configuration Parameters
 
+Configuration parameters can be set through one or more of the following
+mechanisms:
+
+1. Environment variables set in the shell before executing python, and/or
+1. Environment variables possibly loaded from `config/config.env`, and/or
+1. Environment varialbes possibly loaded from `config/config_debug.env`, **if**
+   flask debug mode is set
+
+Environment variables loaded from `.env` files are in the
+[dotenv format](https://hexdocs.pm/dotenvy/dotenv-file-format.html).
+
+Earlier mechanisms are overwritten by later mechanisms; a config value set in
+the shell environment is overridden by one set in `config.env` which is
+overridden by one set in `config_debug.env`. Typically one will rely on loading
+config values from both `dotenv` files in development and will then use Docker's
+`dotenv` support (`--env-file`) to load the `config.env` file in production.
+
+All environment variable names below should be prefaced with `FLASK_`.
+
 - `DB_FILE` - (Relative) path to sqlite file. Must be created first with
-  `python -m flask initdb`.
+  `python -m flask initdb`; the docker image will do this for you on its first
+  execution.
 - OIDC-specific settings as
   [documented here](https://flask-oidc.readthedocs.io/en/latest/#settings-reference),
   and specifically including:
@@ -82,13 +100,13 @@ that only the uploader can annotate their screenshots.
 - `SECRET_KEY` - A large random string, used by
   [Flask for session cookies](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY).
 - File Storage Configuration
-  - `FILES_SERVICE` - Either `LOCAL` or `S3`.
-  - `FILES_LOCAL_DIR` - Local directory for screenshot storage. Required if
-    `FILES_SERVICE` is `LOCAL` or if `FILES_SERVICE` is `S3` and
-    `FILES_S3_LOCAL_CACHE` is `true`.
-  - `FILES_S3_BUCKET` - S3 bucket name. Required for S3.
-  - `FILES_S3_KEY` - S3 authorization key. Required for S3.
-  - `FILES_S3_SECRET` - S3 authorization secret key. Required for S3.
+  - `STORAGE_SERVICE` - Either `LOCAL` or `S3`.
+  - `STORAGE_LOCAL_DIR` - Local directory for screenshot storage. Required if
+    `STORAGE_SERVICE` is `LOCAL` or if `STORAGE_SERVICE` is `S3` and
+    `STORAGE_S3_LOCAL_CACHE` is `true`.
+  - `STORAGE_S3_BUCKET` - S3 bucket name. Required for S3.
+  - `STORAGE_S3_KEY` - S3 authorization key. Required for S3.
+  - `STORAGE_S3_SECRET` - S3 authorization secret key. Required for S3.
 
 ## Screenshots
 
@@ -100,11 +118,12 @@ that only the uploader can annotate their screenshots.
 
 1. ~~Implement SSO-based authentication~~
 1. Create thumbnails on upload
+1. Convert non-PNGs to PNGs on upload
 1. Overwrite the image when blurring
 1. Cloud-based StorageService library to store images in ~~AWS~~ / GCP
 1. Homepage section which shows your recently created images
 1. LRU-based request caching, including invalidating another process' cache
-1. Docker-based installation
+1. ~~Docker-based deployment~~
 1. Unit tests
 1. PII detection to mark a screenshot as non-public
 1. Support for copying short urls (e.g., screen/abc or go/screen/abc)

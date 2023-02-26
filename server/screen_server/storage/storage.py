@@ -38,18 +38,19 @@ class StorageService(abc.ABC):
     from screen_server.storage import local
     from screen_server.storage import s3
 
-    if config['FILES_SERVICE'] == 'LOCAL':
-      LOGGER.info('Creting local filesystem service')
+    if config['STORAGE_SERVICE'] == 'LOCAL':
+      LOGGER.info('Creating local filesystem service')
       return local.LocalFileSystemStorageService(config)
 
-    if config['FILES_SERVICE'] == 'S3':
+    if config['STORAGE_SERVICE'] == 'S3':
       local_cache = None
 
-      if config.get('FILES_S3_LOCAL_CACHE'):
+      if config.get('STORAGE_S3_LOCAL_CACHE'):
         LOGGER.info('Creating local filesystem service for caching')
         local_cache = local.LocalFileSystemStorageService(config)
 
       LOGGER.info('Creating s3 filesystem service')
       return s3.S3FileSystemStorageService(config, local_cache)
 
-    raise ValueError(f'{config["FILES_SERVICE"]} storage service not available')
+    raise ValueError((f'{config["STORAGE_SERVICE"]} storage service is not '
+                      'available'))

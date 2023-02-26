@@ -1,2 +1,6 @@
 venv/
 __pycache__/
+
+config/config.env
+config/config_debug.env
+config/client_secrets.json

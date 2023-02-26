@@ -1,6 +1,7 @@
 """ StorageService for reading/writing images in S3 buckets. """
 # pyright: reportImportCycles=false
 import io
+import shutil
 from typing import Optional, TYPE_CHECKING
 
 import boto3
@@ -21,11 +22,11 @@ class S3FileSystemStorageService(storage.StorageService):
     self.local_cache = local_cache
 
     session = boto3.Session(
-      aws_access_key_id=config['FILES_S3_KEY'],
-      aws_secret_access_key=config['FILES_S3_SECRET']
+      aws_access_key_id=config['STORAGE_S3_KEY'],
+      aws_secret_access_key=config['STORAGE_S3_SECRET']
     )
     resource = session.resource('s3')
-    self.bucket = resource.Bucket(config['FILES_S3_BUCKET'])
+    self.bucket = resource.Bucket(config['STORAGE_S3_BUCKET'])
 
   def _maybe_cache_locally(self, file_id: str,
                            fdata: datastructures.FileStorage,
@@ -42,7 +43,11 @@ class S3FileSystemStorageService(storage.StorageService):
   def write_file(self, file_id: str, fdata: datastructures.FileStorage,
       variant: Optional[str] = None) -> None:
     """Put image in s3 bucket and possibly save a cache locally. """
-    self.bucket.upload_fileobj(fdata, self._get_filename(file_id, variant))
+    # upload_fileobj() closes the file so we give it a copy
+    fileobj = io.BytesIO()
+    shutil.copyfileobj(fdata.stream, fileobj)
+
+    self.bucket.upload_fileobj(fileobj, self._get_filename(file_id, variant))
 
     # If local_cache is defined then also save to filesystem
     self._maybe_cache_locally(file_id, fdata, variant)
