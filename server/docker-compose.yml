@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 app:APP
+    volumes:
+      - screen-images:/data/images
+      - screen-db:/data/db
+      - ./config/client_secrets.json:/config/client_secrets.json
+    ports:
+      - 8000:8000
+    env_file:
+      - ./config/config.env
+volumes:
+  screen-images:
+  screen-db:

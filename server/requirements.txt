@@ -1,4 +1,5 @@
 boto3==1.26.*
 Flask==2.2.*
-Flask-OIDC @ git+https://github.com/fedora-infra/flask-oidc/@f9e4367098f269160edca4c4601b98372aae8c65
+Flask-OIDC @ https://github.com/fedora-infra/flask-oidc/archive/refs/tags/1.5.0.tar.gz
+gunicorn==20.1.*
 python-dotenv==1.0.*
