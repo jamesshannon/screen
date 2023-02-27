@@ -7,7 +7,7 @@ services:
     volumes:
       - screen-images:/data/images
       - screen-db:/data/db
-      - ./config/client_secrets.json:/config/client_secrets.json
+      - ./config/secret_client_secrets.json:/config/secret_client_secrets.json
     ports:
       - 8000:8000
     env_file:

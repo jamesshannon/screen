@@ -73,7 +73,7 @@ mechanisms:
 
 1. Environment variables set in the shell before executing python, and/or
 1. Environment variables possibly loaded from `config/config.env`, and/or
-1. Environment varialbes possibly loaded from `config/config_debug.env`, **if**
+1. Environment variables possibly loaded from `config/config_debug.env`, **if**
    flask debug mode is set
 
 Environment variables loaded from `.env` files are in the
@@ -85,7 +85,8 @@ overridden by one set in `config_debug.env`. Typically one will rely on loading
 config values from both `dotenv` files in development and will then use Docker's
 `dotenv` support (`--env-file`) to load the `config.env` file in production.
 
-All environment variable names below should be prefaced with `FLASK_`.
+All environment variable names below should be prefaced with `FLASK_`. Boolean
+values should be lowercase `true` or `false`.
 
 - `DB_FILE` - (Relative) path to sqlite file. Must be created first with
   `python -m flask initdb`; the docker image will do this for you on its first
@@ -100,13 +101,20 @@ All environment variable names below should be prefaced with `FLASK_`.
 - `SECRET_KEY` - A large random string, used by
   [Flask for session cookies](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY).
 - File Storage Configuration
-  - `STORAGE_SERVICE` - Either `LOCAL` or `S3`.
+  - `STORAGE_SERVICE` - `LOCAL` or `S3` or `GCS`.
+  - `STORAGE_CLOUD_LOCAL_CACHE` - Set to `true` to if you're using a cloud
+    storage provider (`S3` or `GCS`) and you wish to _also_ use the local
+    storage provider for caching purposes, in which case `STORAGE_LOCAL_DIR`
+    must be a valid local directory. Defaults to `false`.
   - `STORAGE_LOCAL_DIR` - Local directory for screenshot storage. Required if
-    `STORAGE_SERVICE` is `LOCAL` or if `STORAGE_SERVICE` is `S3` and
-    `STORAGE_S3_LOCAL_CACHE` is `true`.
+    `STORAGE_SERVICE` is `LOCAL` or if `STORAGE_SERVICE` is a cloud service
+    (`S3` or `GCS`) and `STORAGE_CLOUD_LOCAL_CACHE` is `true`.
   - `STORAGE_S3_BUCKET` - S3 bucket name. Required for S3.
   - `STORAGE_S3_KEY` - S3 authorization key. Required for S3.
   - `STORAGE_S3_SECRET` - S3 authorization secret key. Required for S3.
+  - `STORAGE_GCS_BUCKET` - GCS bucket name. Required for GCS.
+  - `STORAGE_GCS_SAKE` - Relative path to service account key export `json`
+    file. Required for GCS.
 
 ## Screenshots
 
@@ -120,7 +128,8 @@ All environment variable names below should be prefaced with `FLASK_`.
 1. Create thumbnails on upload
 1. Convert non-PNGs to PNGs on upload
 1. Overwrite the image when blurring
-1. Cloud-based StorageService library to store images in ~~AWS~~ / GCP
+   ([Issue #2](https://github.com/jamesshannon/screen/issues/2))
+1. ~~Cloud-based StorageService library to store images in AWS / GCP~~
 1. Homepage section which shows your recently created images
 1. LRU-based request caching, including invalidating another process' cache
 1. ~~Docker-based deployment~~

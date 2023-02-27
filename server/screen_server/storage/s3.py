@@ -2,24 +2,19 @@
 # pyright: reportImportCycles=false
 import io
 import shutil
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
 import boto3
 from werkzeug import datastructures
 
 from screen_server.storage import storage
 
-if TYPE_CHECKING:
-  from screen_server.storage import local
-
-class S3FileSystemStorageService(storage.StorageService):
-  """ StorageService for reading/writing images in local filesystem. """
+class S3StorageService(storage.CloudStorageService):
+  """ StorageService for reading/writing images in S3. """
   def __init__(self, config: dict[str, str],
-               local_cache: Optional['local.LocalFileSystemStorageService']):
+               local_cache: Optional[storage.StorageService]):
     """ Create s3 session. """
-    super().__init__(config)
-
-    self.local_cache = local_cache
+    super().__init__(config, local_cache)
 
     session = boto3.Session(
       aws_access_key_id=config['STORAGE_S3_KEY'],
@@ -27,18 +22,6 @@ class S3FileSystemStorageService(storage.StorageService):
     )
     resource = session.resource('s3')
     self.bucket = resource.Bucket(config['STORAGE_S3_BUCKET'])
-
-  def _maybe_cache_locally(self, file_id: str,
-                           fdata: datastructures.FileStorage,
-                           variant: Optional[str] = None) -> None:
-    """ Write image locally using a StorageService, if configured. """
-    if self.local_cache:
-      try:
-        fdata.seek(0)
-        self.local_cache.write_file(file_id, fdata, variant)
-        fdata.seek(0)
-      except FileExistsError:
-        pass
 
   def write_file(self, file_id: str, fdata: datastructures.FileStorage,
       variant: Optional[str] = None) -> None:
